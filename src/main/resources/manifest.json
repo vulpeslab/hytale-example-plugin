@@ -1,0 +1,20 @@
+{
+  "Group": "com.example",
+  "Name": "ExamplePlugin",
+  "Version": "1.0.0",
+  "Description": "An example plugin for Hytale server demonstrating commands and events",
+  "Main": "com.example.ExamplePlugin",
+  "Authors": [
+    {
+      "Name": "Vulpeslab",
+      "Website": "https://github.com/vulpeslab"
+    }
+  ],
+  "Website": "https://github.com/vulpeslab/hytale-example-plugin",
+  "ServerVersion": ">=0.0.1",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "LoadBefore": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": false
+}

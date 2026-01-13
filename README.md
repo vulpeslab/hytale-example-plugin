@@ -24,7 +24,7 @@ The compiled plugin JAR will be in `build/libs/`.
 ## Requirements
 
 - Hytale Server with plugin support
-- Java 21+
+- Java 25+
 - `HytaleServer.jar` in the project root for compilation
 
 ## Documentation

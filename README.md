@@ -29,7 +29,7 @@ The compiled plugin JAR will be in `build/libs/`.
 
 ## Documentation
 
-For a comprehensive guide on how to create Hytale plugins, see the official documentation:
+For a comprehensive guide on how to create Hytale plugins, see the community-made documentation:
 
 👉 [Hytale Plugin Development Guide](https://hytale-docs.pages.dev/getting-started/introduction/)
 

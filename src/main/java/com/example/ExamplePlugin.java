@@ -48,6 +48,9 @@ public class ExamplePlugin extends JavaPlugin {
     // Track players with godmode enabled (by username)
     private final Set<String> playersWithGodmode = new HashSet<>();
 
+    // Track players with damage meter enabled (by username)
+    private final Set<String> playersWithDamageMeter = new HashSet<>();
+
     public boolean hasGodmode(String username) {
         return playersWithGodmode.contains(username);
     }
@@ -58,6 +61,20 @@ public class ExamplePlugin extends JavaPlugin {
             return false;
         } else {
             playersWithGodmode.add(username);
+            return true;
+        }
+    }
+
+    public boolean hasDamageMeter(String username) {
+        return playersWithDamageMeter.contains(username);
+    }
+
+    public boolean toggleDamageMeter(String username) {
+        if (playersWithDamageMeter.contains(username)) {
+            playersWithDamageMeter.remove(username);
+            return false;
+        } else {
+            playersWithDamageMeter.add(username);
             return true;
         }
     }
@@ -151,6 +168,7 @@ public class ExamplePlugin extends JavaPlugin {
             this.addSubCommand(new InfoCommand());
             this.addSubCommand(new ToolsCommand());
             this.addSubCommand(new GodmodeCommand());
+            this.addSubCommand(new DamageMeterCommand());
         }
 
         // /example info - shows plugin information
@@ -261,9 +279,42 @@ public class ExamplePlugin extends JavaPlugin {
                 }
             }
         }
+
+        // /example damage-meter - toggles damage meter display (requires permission)
+        class DamageMeterCommand extends AbstractPlayerCommand {
+
+            DamageMeterCommand() {
+                super("damage-meter", "example.commands.damage-meter.desc");
+            }
+
+            @Override
+            protected void execute(@Nonnull CommandContext context,
+                                   @Nonnull Store<EntityStore> store,
+                                   @Nonnull Ref<EntityStore> ref,
+                                   @Nonnull PlayerRef playerRef,
+                                   @Nonnull World world) {
+
+                // Check permission
+                if (!context.sender().hasPermission("example.damage-meter")) {
+                    context.sendMessage(Message.translation("You don't have permission to use damage meter!"));
+                    return;
+                }
+
+                String username = playerRef.getUsername();
+                boolean enabled = toggleDamageMeter(username);
+
+                if (enabled) {
+                    context.sendMessage(Message.translation("Damage meter enabled! You will see damage dealt to enemies."));
+                    getLogger().at(Level.INFO).log("Damage meter enabled for player: %s", username);
+                } else {
+                    context.sendMessage(Message.translation("Damage meter disabled."));
+                    getLogger().at(Level.INFO).log("Damage meter disabled for player: %s", username);
+                }
+            }
+        }
     }
 
-    // Damage listener system that handles godmode (prevents all damage for players with godmode)
+    // Damage listener system that handles godmode and damage meter
     // Runs in the Filter Damage Group (before damage is applied to health)
     class PlayerDamageListener extends DamageEventSystem {
 
@@ -288,23 +339,39 @@ public class ExamplePlugin extends JavaPlugin {
                 return;
             }
 
-            // Get reference to the damaged entity
+            // Get reference to the damaged entity (target)
             Ref<EntityStore> targetRef = chunk.getReferenceTo(index);
+            float damageAmount = damage.getAmount();
 
-            // Check if target is a player
-            Player player = store.getComponent(targetRef, Player.getComponentType());
-            if (player == null) {
+            // Handle damage meter for attacker (source)
+            Damage.Source source = damage.getSource();
+            if (source instanceof Damage.EntitySource entitySource) {
+                Ref<EntityStore> attackerRef = entitySource.getRef();
+                if (attackerRef != null && attackerRef.isValid()) {
+                    Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
+                    if (attackerPlayer != null) {
+                        String attackerUsername = attackerPlayer.getPlayerRef().getUsername();
+                        if (hasDamageMeter(attackerUsername)) {
+                            attackerPlayer.sendMessage(Message.translation(
+                                String.format("Damage dealt: %.1f", damageAmount)));
+                        }
+                    }
+                }
+            }
+
+            // Check if target is a player for godmode/damage notifications
+            Player targetPlayer = store.getComponent(targetRef, Player.getComponentType());
+            if (targetPlayer == null) {
                 return;
             }
 
-            String username = player.getPlayerRef().getUsername();
-            float damageAmount = damage.getAmount();
+            String username = targetPlayer.getPlayerRef().getUsername();
 
             // Check if player has godmode enabled
             if (hasGodmode(username)) {
                 // Cancel all damage for godmode players
                 damage.setCancelled(true);
-                player.sendMessage(Message.translation(
+                targetPlayer.sendMessage(Message.translation(
                     String.format("Godmode: Blocked %.1f damage!", damageAmount)));
                 return;
             }
@@ -322,7 +389,7 @@ public class ExamplePlugin extends JavaPlugin {
             }
 
             float currentHealth = health.get();
-            player.sendMessage(Message.translation(
+            targetPlayer.sendMessage(Message.translation(
                 String.format("You took %.1f damage! Health: %.1f -> %.1f",
                     damageAmount, currentHealth, currentHealth - damageAmount)));
         }

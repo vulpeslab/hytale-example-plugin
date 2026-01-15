@@ -21,5 +21,6 @@ public class ExampleCommand extends AbstractCommandCollection {
         addSubCommand(new ToolsCommand());
         addSubCommand(new GodmodeCommand());
         addSubCommand(new DamageMeterCommand());
+        addSubCommand(new DurabilityCommand());
     }
 }

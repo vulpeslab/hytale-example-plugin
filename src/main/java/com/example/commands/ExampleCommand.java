@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractComman
  * - /example tools - Gives starter tools (once per player)
  * - /example godmode - Toggles invincibility (requires permission)
  * - /example damage-meter - Toggles damage display (requires permission)
+ * - /example ui - Opens the plugin UI panel
  */
 public class ExampleCommand extends AbstractCommandCollection {
 
@@ -22,5 +23,6 @@ public class ExampleCommand extends AbstractCommandCollection {
         addSubCommand(new GodmodeCommand());
         addSubCommand(new DamageMeterCommand());
         addSubCommand(new DurabilityCommand());
+        addSubCommand(new UICommand());
     }
 }

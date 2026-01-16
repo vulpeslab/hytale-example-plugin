@@ -16,19 +16,19 @@ import javax.annotation.Nonnull;
  * /example customui - Opens a custom UI page with inline layout
  */
 public class CustomUICommand extends AbstractPlayerCommand {
-
     public CustomUICommand() {
         super("customui", "example.commands.customui.desc");
         requirePermission("example.customui");
     }
 
     @Override
-    protected void execute(@Nonnull CommandContext context,
-                           @Nonnull Store<EntityStore> store,
-                           @Nonnull Ref<EntityStore> ref,
-                           @Nonnull PlayerRef playerRef,
-                           @Nonnull World world) {
-
+    protected void execute(
+        @Nonnull CommandContext context,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull PlayerRef playerRef,
+        @Nonnull World world
+    ) {
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player == null) {
             return;

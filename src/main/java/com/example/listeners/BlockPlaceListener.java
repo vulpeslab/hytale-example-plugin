@@ -31,10 +31,13 @@ public class BlockPlaceListener extends EntityEventSystem<EntityStore, PlaceBloc
     }
 
     @Override
-    public void handle(int index, @Nonnull ArchetypeChunk<EntityStore> chunk,
-                       @Nonnull Store<EntityStore> store,
-                       @Nonnull CommandBuffer<EntityStore> commandBuffer,
-                       @Nonnull PlaceBlockEvent event) {
+    public void handle(
+        int index,
+        @Nonnull ArchetypeChunk<EntityStore> chunk,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull CommandBuffer<EntityStore> commandBuffer,
+        @Nonnull PlaceBlockEvent event
+    ) {
 
         // Get the entity that placed the block
         Ref<EntityStore> entityRef = chunk.getReferenceTo(index);

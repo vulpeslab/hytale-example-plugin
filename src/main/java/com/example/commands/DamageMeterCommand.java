@@ -24,22 +24,24 @@ public class DamageMeterCommand extends AbstractPlayerCommand {
     }
 
     @Override
-    protected void execute(@Nonnull CommandContext context,
-                           @Nonnull Store<EntityStore> store,
-                           @Nonnull Ref<EntityStore> ref,
-                           @Nonnull PlayerRef playerRef,
-                           @Nonnull World world) {
-
+    protected void execute(
+        @Nonnull CommandContext context,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull PlayerRef playerRef,
+        @Nonnull World world
+    ) {
         ExamplePlugin plugin = ExamplePlugin.get();
         String username = playerRef.getUsername();
         boolean enabled = plugin.toggleDamageMeter(username);
 
-        if (enabled) {
-            context.sendMessage(Message.raw("Damage meter enabled! You will see damage dealt to enemies."));
-            plugin.getLogger().at(Level.INFO).log("Damage meter enabled for player: %s", username);
-        } else {
+        if (!enabled) {
             context.sendMessage(Message.raw("Damage meter disabled."));
             plugin.getLogger().at(Level.INFO).log("Damage meter disabled for player: %s", username);
+            return;
         }
+
+        context.sendMessage(Message.raw("Damage meter enabled! You will see damage dealt to enemies."));
+        plugin.getLogger().at(Level.INFO).log("Damage meter enabled for player: %s", username);
     }
 }

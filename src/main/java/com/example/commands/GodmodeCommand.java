@@ -24,22 +24,25 @@ public class GodmodeCommand extends AbstractPlayerCommand {
     }
 
     @Override
-    protected void execute(@Nonnull CommandContext context,
-                           @Nonnull Store<EntityStore> store,
-                           @Nonnull Ref<EntityStore> ref,
-                           @Nonnull PlayerRef playerRef,
-                           @Nonnull World world) {
+    protected void execute(
+        @Nonnull CommandContext context,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull PlayerRef playerRef,
+        @Nonnull World world
+    ) {
 
         ExamplePlugin plugin = ExamplePlugin.get();
         String username = playerRef.getUsername();
         boolean enabled = plugin.toggleGodmode(username);
 
-        if (enabled) {
-            context.sendMessage(Message.raw("Godmode enabled! You are now invincible."));
-            plugin.getLogger().at(Level.INFO).log("Godmode enabled for player: %s", username);
-        } else {
+        if (!enabled) {
             context.sendMessage(Message.raw("Godmode disabled! You can now take damage."));
             plugin.getLogger().at(Level.INFO).log("Godmode disabled for player: %s", username);
+            return;
         }
+
+        context.sendMessage(Message.raw("Godmode enabled! You are now invincible."));
+        plugin.getLogger().at(Level.INFO).log("Godmode enabled for player: %s", username);
     }
 }

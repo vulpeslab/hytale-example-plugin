@@ -28,10 +28,12 @@ public class CustomExampleUIPage extends InteractiveCustomUIPage<CustomExampleUI
     }
 
     @Override
-    public void build(@Nonnull Ref<EntityStore> ref,
-                      @Nonnull UICommandBuilder commands,
-                      @Nonnull UIEventBuilder events,
-                      @Nonnull Store<EntityStore> store) {
+    public void build(
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull UICommandBuilder commands,
+        @Nonnull UIEventBuilder events,
+        @Nonnull Store<EntityStore> store
+    ) {
 
         ExamplePlugin plugin = ExamplePlugin.get();
         String username = playerRef.getUsername();
@@ -58,9 +60,11 @@ public class CustomExampleUIPage extends InteractiveCustomUIPage<CustomExampleUI
     }
 
     @Override
-    public void handleDataEvent(@Nonnull Ref<EntityStore> ref,
-                                @Nonnull Store<EntityStore> store,
-                                @Nonnull UIEventData data) {
+    public void handleDataEvent(
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull UIEventData data
+    ) {
         // Page uses BackButton which dismisses automatically
     }
 

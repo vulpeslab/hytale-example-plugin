@@ -43,10 +43,13 @@ public class PlayerDamageListener extends DamageEventSystem {
     }
 
     @Override
-    public void handle(int index, @Nonnull ArchetypeChunk<EntityStore> chunk,
-                       @Nonnull Store<EntityStore> store,
-                       @Nonnull CommandBuffer<EntityStore> commandBuffer,
-                       @Nonnull Damage damage) {
+    public void handle(
+        int index,
+        @Nonnull ArchetypeChunk<EntityStore> chunk,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull CommandBuffer<EntityStore> commandBuffer,
+        @Nonnull Damage damage
+    ) {
         // Skip if already cancelled
         if (damage.isCancelled()) {
             return;
@@ -68,8 +71,12 @@ public class PlayerDamageListener extends DamageEventSystem {
     /**
      * Shows damage dealt to attackers who have damage meter enabled.
      */
-    private void handleDamageMeter(ExamplePlugin plugin, Store<EntityStore> store,
-                                    Damage damage, float damageAmount) {
+    private void handleDamageMeter(
+        ExamplePlugin plugin,
+        Store<EntityStore> store,
+        Damage damage,
+        float damageAmount
+    ) {
         Damage.Source source = damage.getSource();
 
         if (source instanceof Damage.EntitySource entitySource) {
@@ -93,8 +100,13 @@ public class PlayerDamageListener extends DamageEventSystem {
     /**
      * Handles godmode and damage notifications for the target player.
      */
-    private void handleTargetPlayer(ExamplePlugin plugin, Store<EntityStore> store,
-                                     Ref<EntityStore> targetRef, Damage damage, float damageAmount) {
+    private void handleTargetPlayer(
+        ExamplePlugin plugin,
+        Store<EntityStore> store,
+        Ref<EntityStore> targetRef,
+        Damage damage,
+        float damageAmount
+    ) {
         // Check if target is a player
         Player targetPlayer = store.getComponent(targetRef, Player.getComponentType());
         if (targetPlayer == null) {
@@ -119,8 +131,12 @@ public class PlayerDamageListener extends DamageEventSystem {
     /**
      * Shows a damage notification to the player with current health info.
      */
-    private void showDamageNotification(Store<EntityStore> store, Ref<EntityStore> targetRef,
-                                         Player targetPlayer, float damageAmount) {
+    private void showDamageNotification(
+        Store<EntityStore> store,
+        Ref<EntityStore> targetRef,
+        Player targetPlayer,
+        float damageAmount
+    ) {
         EntityStatMap stats = store.getComponent(targetRef, EntityStatMap.getComponentType());
         if (stats == null) {
             return;

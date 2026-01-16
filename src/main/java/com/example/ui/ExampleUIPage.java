@@ -41,10 +41,12 @@ public class ExampleUIPage extends InteractiveCustomUIPage<ExampleUIPage.UIEvent
     }
 
     @Override
-    public void build(@Nonnull Ref<EntityStore> ref,
-                      @Nonnull UICommandBuilder commands,
-                      @Nonnull UIEventBuilder events,
-                      @Nonnull Store<EntityStore> store) {
+    public void build(
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull UICommandBuilder commands,
+        @Nonnull UIEventBuilder events,
+        @Nonnull Store<EntityStore> store
+    ) {
 
         ExamplePlugin plugin = ExamplePlugin.get();
         String username = playerRef.getUsername();
@@ -81,8 +83,13 @@ public class ExampleUIPage extends InteractiveCustomUIPage<ExampleUIPage.UIEvent
         addCommandButton(commands, events, 3, "Toggle Damage Meter [" + (hasDamageMeter ? "ON" : "OFF") + "]", "damage-meter");
     }
 
-    private void addCommandButton(UICommandBuilder commands, UIEventBuilder events,
-                                   int index, String label, String action) {
+    private void addCommandButton(
+        UICommandBuilder commands,
+        UIEventBuilder events,
+        int index,
+        String label,
+        String action
+    ) {
         String selector = "#PluginList[" + index + "]";
         commands.append("#PluginList", BUTTON_TEMPLATE);
         commands.set(selector + " #Button.Text", label);
@@ -105,9 +112,11 @@ public class ExampleUIPage extends InteractiveCustomUIPage<ExampleUIPage.UIEvent
     }
 
     @Override
-    public void handleDataEvent(@Nonnull Ref<EntityStore> ref,
-                                @Nonnull Store<EntityStore> store,
-                                @Nonnull UIEventData data) {
+    public void handleDataEvent(
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull UIEventData data
+    ) {
 
         if (data.action == null) {
             return;
@@ -135,10 +144,12 @@ public class ExampleUIPage extends InteractiveCustomUIPage<ExampleUIPage.UIEvent
         );
     }
 
-    private void handleTools(@Nonnull Ref<EntityStore> ref,
-                             @Nonnull Store<EntityStore> store,
-                             ExamplePlugin plugin,
-                             String username) {
+    private void handleTools(
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull Store<EntityStore> store,
+        ExamplePlugin plugin,
+        String username
+    ) {
 
         if (plugin.hasReceivedTools(username)) {
             NotificationUtil.sendNotification(

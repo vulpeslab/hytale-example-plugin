@@ -31,11 +31,13 @@ public class DurabilityCommand extends AbstractPlayerCommand {
     }
 
     @Override
-    protected void execute(@Nonnull CommandContext context,
-                           @Nonnull Store<EntityStore> store,
-                           @Nonnull Ref<EntityStore> ref,
-                           @Nonnull PlayerRef playerRef,
-                           @Nonnull World world) {
+    protected void execute(
+        @Nonnull CommandContext context,
+        @Nonnull Store<EntityStore> store,
+        @Nonnull Ref<EntityStore> ref,
+        @Nonnull PlayerRef playerRef,
+        @Nonnull World world
+    ) {
 
         // Get the durability argument
         double newDurability = durabilityArg.get(context);
@@ -66,7 +68,9 @@ public class DurabilityCommand extends AbstractPlayerCommand {
         // Clamp durability to valid range
         if (newDurability < 0) {
             newDurability = 0;
-        } else if (newDurability > maxDurability) {
+        }
+
+        if (newDurability > maxDurability) {
             newDurability = maxDurability;
         }
 

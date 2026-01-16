@@ -118,10 +118,10 @@ public class ExamplePlugin extends JavaPlugin {
         if (playersWithGodmode.contains(username)) {
             playersWithGodmode.remove(username);
             return false;
-        } else {
-            playersWithGodmode.add(username);
-            return true;
         }
+
+        playersWithGodmode.add(username);
+        return true;
     }
 
     // ==================== Damage Meter State ====================
@@ -141,9 +141,9 @@ public class ExamplePlugin extends JavaPlugin {
         if (playersWithDamageMeter.contains(username)) {
             playersWithDamageMeter.remove(username);
             return false;
-        } else {
-            playersWithDamageMeter.add(username);
-            return true;
         }
+
+        playersWithDamageMeter.add(username);
+        return true;
     }
 }

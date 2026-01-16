@@ -20,7 +20,7 @@ import java.util.logging.Level;
  * - Damage system integration (godmode, damage meter)
  * - Block use events (door opening reward)
  */
-@SuppressWarnings({"null", "removal"})
+@SuppressWarnings("null")
 public class ExamplePlugin extends JavaPlugin {
 
     private static ExamplePlugin instance;

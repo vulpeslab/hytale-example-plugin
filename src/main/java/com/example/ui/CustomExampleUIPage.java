@@ -5,7 +5,6 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
-import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
@@ -18,6 +17,7 @@ import javax.annotation.Nonnull;
  * Custom UI page for the Example Plugin using a custom .ui file from the asset pack.
  * Demonstrates creating a custom layout with an image.
  */
+@SuppressWarnings("null")
 public class CustomExampleUIPage extends InteractiveCustomUIPage<CustomExampleUIPage.UIEventData> {
 
     // Custom .ui file from the plugin's asset pack

@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 /**
  * /example sethealth <value> - Sets the player's health
  */
+@SuppressWarnings("null")
 public class SetHealthCommand extends AbstractPlayerCommand {
 
     @Nonnull

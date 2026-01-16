@@ -16,6 +16,7 @@ import com.hypixel.hytale.component.Store;
  * Currently handles:
  * - Door opening: Gives player a door item reward (once per player)
  */
+@SuppressWarnings("removal")
 public class BlockUseListener {
 
     private final ExamplePlugin plugin;

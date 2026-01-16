@@ -21,6 +21,7 @@ import java.util.logging.Level;
 /**
  * /example tools - Gives starter crude tools (once per player)
  */
+@SuppressWarnings("null")
 public class ToolsCommand extends AbstractPlayerCommand {
 
     public ToolsCommand() {

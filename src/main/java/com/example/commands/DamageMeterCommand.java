@@ -16,6 +16,7 @@ import java.util.logging.Level;
 /**
  * /example damage-meter - Toggles damage meter display
  */
+@SuppressWarnings("null")
 public class DamageMeterCommand extends AbstractPlayerCommand {
 
     public DamageMeterCommand() {

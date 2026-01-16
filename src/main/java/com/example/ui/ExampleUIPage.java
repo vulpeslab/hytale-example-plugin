@@ -30,6 +30,7 @@ import java.util.logging.Level;
  * Interactive UI page for the Example Plugin.
  * Uses the built-in PluginListPage layout and adapts it for plugin commands.
  */
+@SuppressWarnings("null")
 public class ExampleUIPage extends InteractiveCustomUIPage<ExampleUIPage.UIEventData> {
 
     private static final String PAGE_LAYOUT = "Pages/PluginListPage.ui";

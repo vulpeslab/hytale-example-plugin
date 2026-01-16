@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
  * Runs in the Filter Damage Group (before damage is applied to health)
  * to allow cancelling damage before it affects the player.
  */
+@SuppressWarnings({"null", "removal"})
 public class PlayerDamageListener extends DamageEventSystem {
 
     @Override

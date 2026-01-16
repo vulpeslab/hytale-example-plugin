@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 /**
  * /example durability <value> - Sets the durability of the item in hand
  */
+@SuppressWarnings("null")
 public class DurabilityCommand extends AbstractPlayerCommand {
 
     @Nonnull

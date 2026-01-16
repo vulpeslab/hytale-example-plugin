@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 /**
  * /example setenergy <value> - Sets the player's energy (stamina)
  */
+@SuppressWarnings("null")
 public class SetEnergyCommand extends AbstractPlayerCommand {
 
     @Nonnull

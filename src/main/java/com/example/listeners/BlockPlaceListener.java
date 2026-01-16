@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
  * Listener for block placement events.
  * Sends the player a message when they place a block, including block type and coordinates.
  */
+@SuppressWarnings("null")
 public class BlockPlaceListener extends EntityEventSystem<EntityStore, PlaceBlockEvent> {
 
     public BlockPlaceListener() {

@@ -16,6 +16,7 @@ import java.util.logging.Level;
 /**
  * /example godmode - Toggles godmode (invincibility)
  */
+@SuppressWarnings("null")
 public class GodmodeCommand extends AbstractPlayerCommand {
 
     public GodmodeCommand() {

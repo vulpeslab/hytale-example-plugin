@@ -27,6 +27,7 @@ public class DurabilityCommand extends AbstractPlayerCommand {
 
     public DurabilityCommand() {
         super("durability", "example.commands.durability.desc");
+        requirePermission("example.durability");
     }
 
     @Override

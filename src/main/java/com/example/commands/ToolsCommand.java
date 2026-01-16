@@ -25,6 +25,7 @@ public class ToolsCommand extends AbstractPlayerCommand {
 
     public ToolsCommand() {
         super("tools", "example.commands.tools.desc");
+        requirePermission("example.tools");
     }
 
     @Override

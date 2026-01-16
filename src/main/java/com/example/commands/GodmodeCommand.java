@@ -14,14 +14,13 @@ import javax.annotation.Nonnull;
 import java.util.logging.Level;
 
 /**
- * /example godmode - Toggles godmode (requires example.godmode permission)
+ * /example godmode - Toggles godmode (invincibility)
  */
 public class GodmodeCommand extends AbstractPlayerCommand {
 
-    private static final String PERMISSION = "example.godmode";
-
     public GodmodeCommand() {
         super("godmode", "example.commands.godmode.desc");
+        requirePermission("example.godmode");
     }
 
     @Override
@@ -31,21 +30,15 @@ public class GodmodeCommand extends AbstractPlayerCommand {
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
 
-        // Check permission
-        if (!context.sender().hasPermission(PERMISSION)) {
-            context.sendMessage(Message.translation("You don't have permission to use godmode!"));
-            return;
-        }
-
         ExamplePlugin plugin = ExamplePlugin.get();
         String username = playerRef.getUsername();
         boolean enabled = plugin.toggleGodmode(username);
 
         if (enabled) {
-            context.sendMessage(Message.translation("Godmode enabled! You are now invincible."));
+            context.sendMessage(Message.raw("Godmode enabled! You are now invincible."));
             plugin.getLogger().at(Level.INFO).log("Godmode enabled for player: %s", username);
         } else {
-            context.sendMessage(Message.translation("Godmode disabled! You can now take damage."));
+            context.sendMessage(Message.raw("Godmode disabled! You can now take damage."));
             plugin.getLogger().at(Level.INFO).log("Godmode disabled for player: %s", username);
         }
     }

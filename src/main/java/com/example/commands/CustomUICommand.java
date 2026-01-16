@@ -19,6 +19,7 @@ public class CustomUICommand extends AbstractPlayerCommand {
 
     public CustomUICommand() {
         super("customui", "example.commands.customui.desc");
+        requirePermission("example.customui");
     }
 
     @Override

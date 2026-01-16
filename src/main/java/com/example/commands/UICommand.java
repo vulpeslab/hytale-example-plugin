@@ -19,6 +19,7 @@ public class UICommand extends AbstractPlayerCommand {
 
     public UICommand() {
         super("ui", "example.commands.ui.desc");
+        requirePermission("example.ui");
     }
 
     @Override

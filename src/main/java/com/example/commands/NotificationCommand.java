@@ -20,6 +20,7 @@ public class NotificationCommand extends AbstractPlayerCommand {
 
     public NotificationCommand() {
         super("notification", "example.commands.notification.desc");
+        requirePermission("example.notification");
     }
 
     @Override

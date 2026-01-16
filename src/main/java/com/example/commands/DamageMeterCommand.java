@@ -14,14 +14,13 @@ import javax.annotation.Nonnull;
 import java.util.logging.Level;
 
 /**
- * /example damage-meter - Toggles damage meter display (requires example.damage-meter permission)
+ * /example damage-meter - Toggles damage meter display
  */
 public class DamageMeterCommand extends AbstractPlayerCommand {
 
-    private static final String PERMISSION = "example.damage-meter";
-
     public DamageMeterCommand() {
         super("damage-meter", "example.commands.damage-meter.desc");
+        requirePermission("example.damage-meter");
     }
 
     @Override
@@ -31,21 +30,15 @@ public class DamageMeterCommand extends AbstractPlayerCommand {
                            @Nonnull PlayerRef playerRef,
                            @Nonnull World world) {
 
-        // Check permission
-        if (!context.sender().hasPermission(PERMISSION)) {
-            context.sendMessage(Message.translation("You don't have permission to use damage meter!"));
-            return;
-        }
-
         ExamplePlugin plugin = ExamplePlugin.get();
         String username = playerRef.getUsername();
         boolean enabled = plugin.toggleDamageMeter(username);
 
         if (enabled) {
-            context.sendMessage(Message.translation("Damage meter enabled! You will see damage dealt to enemies."));
+            context.sendMessage(Message.raw("Damage meter enabled! You will see damage dealt to enemies."));
             plugin.getLogger().at(Level.INFO).log("Damage meter enabled for player: %s", username);
         } else {
-            context.sendMessage(Message.translation("Damage meter disabled."));
+            context.sendMessage(Message.raw("Damage meter disabled."));
             plugin.getLogger().at(Level.INFO).log("Damage meter disabled for player: %s", username);
         }
     }

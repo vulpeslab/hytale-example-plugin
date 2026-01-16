@@ -1,15 +1,24 @@
 package com.example;
 
 import com.example.commands.ExampleCommand;
+import com.example.ui.ExampleHud;
 import com.example.listeners.BlockPlaceListener;
 import com.example.listeners.BlockUseListener;
 import com.example.listeners.PlayerDamageListener;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 /**
@@ -30,6 +39,13 @@ public class ExamplePlugin extends JavaPlugin {
     private final Set<String> playersReceivedDoorReward = new HashSet<>();
     private final Set<String> playersWithGodmode = new HashSet<>();
     private final Set<String> playersWithDamageMeter = new HashSet<>();
+    private final Map<String, ExampleHud> activeHuds = new ConcurrentHashMap<>();
+    private final Map<String, ScheduledFuture<?>> hudTasks = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService hudScheduler = Executors.newSingleThreadScheduledExecutor(r -> {
+        Thread thread = new Thread(r, "ExamplePlugin-HudUpdater");
+        thread.setDaemon(true);
+        return thread;
+    });
 
     public ExamplePlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -66,6 +82,11 @@ public class ExamplePlugin extends JavaPlugin {
 
     @Override
     protected void shutdown() {
+        hudTasks.values().forEach(task -> task.cancel(false));
+        hudTasks.clear();
+        activeHuds.values().forEach(ExampleHud::clear);
+        activeHuds.clear();
+        hudScheduler.shutdownNow();
         getLogger().at(Level.INFO).log("ExamplePlugin shutting down!");
     }
 
@@ -145,5 +166,52 @@ public class ExamplePlugin extends JavaPlugin {
 
         playersWithDamageMeter.add(username);
         return true;
+    }
+
+    // ==================== HUD State ====================
+
+    /**
+     * Check if player has the Example HUD enabled.
+     */
+    public boolean hasHud(String username) {
+        return activeHuds.containsKey(username);
+    }
+
+    /**
+     * Toggle the Example HUD for a player.
+     * @return true if HUD is now enabled, false if disabled
+     */
+    public boolean toggleHud(@Nonnull Player player, @Nonnull PlayerRef playerRef) {
+        String username = playerRef.getUsername();
+
+        if (activeHuds.containsKey(username)) {
+            disableHud(username, player, playerRef);
+            return false;
+        }
+
+        ExampleHud hud = new ExampleHud(playerRef);
+        player.getHudManager().setCustomHud(playerRef, hud);
+
+        ScheduledFuture<?> task = hudScheduler.scheduleAtFixedRate(() -> {
+            try {
+                hud.tick();
+            } catch (Exception e) {
+                getLogger().at(Level.WARNING).log("Failed to update Example HUD for %s", username);
+            }
+        }, 0L, 100L, TimeUnit.MILLISECONDS);
+
+        activeHuds.put(username, hud);
+        hudTasks.put(username, task);
+        return true;
+    }
+
+    private void disableHud(String username, Player player, PlayerRef playerRef) {
+        ScheduledFuture<?> task = hudTasks.remove(username);
+        if (task != null) {
+            task.cancel(false);
+        }
+
+        activeHuds.remove(username);
+        player.getHudManager().setCustomHud(playerRef, null);
     }
 }

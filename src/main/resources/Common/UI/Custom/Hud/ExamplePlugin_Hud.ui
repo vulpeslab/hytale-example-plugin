@@ -1,0 +1,9 @@
+Group #ExamplePluginHud {
+  Anchor: (Top: 20, Left: 20, Height: 40);
+  LayoutMode: Left;
+
+  Label #HudText {
+    Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Start);
+    Text: "ExamplePlugin";
+  }
+}

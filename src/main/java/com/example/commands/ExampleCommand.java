@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractComman
  * - /example damage-meter - Toggles damage display (requires permission)
  * - /example ui - Opens the plugin UI panel
  * - /example customui - Opens a custom UI page with inline layout
+ * - /example notification - Shows a notification to the player
  */
 public class ExampleCommand extends AbstractCommandCollection {
 
@@ -26,5 +27,6 @@ public class ExampleCommand extends AbstractCommandCollection {
         addSubCommand(new DurabilityCommand());
         addSubCommand(new UICommand());
         addSubCommand(new CustomUICommand());
+        addSubCommand(new NotificationCommand());
     }
 }

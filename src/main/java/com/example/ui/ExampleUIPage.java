@@ -34,6 +34,7 @@ public class ExampleUIPage extends InteractiveCustomUIPage<ExampleUIPage.UIEvent
 
     private static final String PAGE_LAYOUT = "Pages/PluginListPage.ui";
     private static final String BUTTON_TEMPLATE = "Pages/PluginListButton.ui";
+    private static final String LOGO_UI = "Pages/ExamplePlugin_Logo.ui";
 
     public ExampleUIPage(@Nonnull PlayerRef playerRef) {
         super(playerRef, CustomPageLifetime.CanDismiss, UIEventData.CODEC);
@@ -50,6 +51,9 @@ public class ExampleUIPage extends InteractiveCustomUIPage<ExampleUIPage.UIEvent
 
         // Load the base page layout
         commands.append(PAGE_LAYOUT);
+
+        // Insert the plugin logo
+        commands.insertBefore("#PluginName", LOGO_UI);
 
         // Set the header info
         commands.set("#PluginName.Text", "Example Plugin");

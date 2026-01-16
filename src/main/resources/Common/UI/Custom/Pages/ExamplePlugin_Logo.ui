@@ -1,0 +1,7 @@
+@LogoTexture = PatchStyle(TexturePath: "vulpeslab.png");
+
+Group {
+  Anchor: (Width: 64, Height: 64, Bottom: 12);
+  LayoutMode: CenterMiddle;
+  Background: @LogoTexture;
+}

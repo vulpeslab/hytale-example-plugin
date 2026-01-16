@@ -1,0 +1,63 @@
+$C = "../Common.ui";
+
+@LogoTexture = PatchStyle(TexturePath: "vulpeslab.png");
+
+$C.@PageOverlay {
+  LayoutMode: Middle;
+
+  Group {
+    Anchor: (Width: 420, Height: 340);
+    Background: #8B0000;
+
+    Group {
+      Anchor: (Full: 6);
+      Background: #2a1a1a;
+
+      Group #TitleBar {
+        Anchor: (Height: 36, Top: 0, Horizontal: 0);
+        Background: #5a0000;
+        LayoutMode: CenterMiddle;
+
+        Label {
+          Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true, RenderUppercase: true, HorizontalAlignment: Center);
+          Text: "Example Plugin";
+        }
+      }
+
+      Group #Content {
+        Anchor: (Top: 36, Full: 0);
+        LayoutMode: Top;
+        Padding: (Top: 50, Horizontal: 20, Bottom: 16);
+
+        Group #LogoContainer {
+          Anchor: (Width: 80, Height: 80, Bottom: 12);
+          LayoutMode: CenterMiddle;
+          Background: @LogoTexture;
+        }
+
+        Label #WelcomeText {
+          Style: (FontSize: 16, TextColor: #ffffff, HorizontalAlignment: Center);
+          Anchor: (Bottom: 16);
+        }
+
+        Label #StatusLabel {
+          Style: (FontSize: 13, TextColor: #ffaaaa, HorizontalAlignment: Center, RenderBold: true);
+          Text: "Current Status:";
+          Anchor: (Bottom: 6);
+        }
+
+        Label #StatusText {
+          Style: (FontSize: 13, TextColor: #ffcccc, Wrap: true, HorizontalAlignment: Center);
+          Anchor: (Bottom: 16);
+        }
+
+        Label #InfoText {
+          Style: (FontSize: 11, TextColor: #aa8888, Wrap: true, HorizontalAlignment: Center);
+          Text: "Use /example ui for interactive controls.";
+        }
+      }
+    }
+  }
+}
+
+$C.@BackButton {}
